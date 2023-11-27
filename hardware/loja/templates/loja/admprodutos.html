@@ -1,0 +1,144 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loja de Hardware</title>
+  <link rel="stylesheet" href="{% static '/loja/css/styles.css' %}">
+  <style>
+    @charset "UTF-8";
+
+    h1 {
+        color: white;
+        font-size: 3vw;
+        padding: 1vw;
+    }
+
+    body {
+        background: url({% static '/loja/images/loginpage/backgrd.jpg' %}) no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+    }
+
+    main {
+        min-height: 85vh;
+    }
+
+    .imgform {
+        background: url({% static '/loja/images/loginpage/form.png' %}) no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+    }
+    
+    h2 {
+        text-align: center;
+        font-size: 3vw;
+        color: white;
+        padding: 0;
+        -webkit-text-stroke: 2px black;
+    }
+    
+    h3 {
+        text-align: left;
+        font-size: 2vw;
+        color: white;
+        padding: 0px;
+    }
+
+    p{
+        color: white;
+        
+    }
+    
+    footer {
+        position: relative;
+        bottom: -6%;
+    }
+    
+    footer > p {
+        font-size: 1vw;
+        padding: 0;
+    }
+    
+</style>
+  <link rel="shortcut icon" href="{% static '/loja/images/loginpage/favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+  
+  <header>
+    <nav class="navbar">
+      <div class="container">
+        <img id="front" src="{% static '/loja/images/loginpage/frontedit.png' %}" alt="imagem decorativa">
+        <h1 class="logo">Administração de Estoque</h1>
+        <ul class="nav-links">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="https://jip8.github.io">Contato</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  
+  <main>
+    <div class="imgform">
+        <h2>Cadastre um novo produto:</h2>
+        <form class="cadprod" action="{% url 'admprodutos' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <label for="nome">Nome:</label>
+                <input type="text" name="nome" id="nome" placeholder="Nome" required>
+            </p>
+            <p>
+                <label for="preco">Preço (R$):</label>
+                <input type="number" step="0.01" name="preco" id="preco" placeholder="Valor" required>
+            </p>
+            <p>
+                <label for="estoque">Estoque:</label>
+                <input type="number" name="estoque" id="estoque" placeholder="Quantidade" required>
+            </p>
+            <p>
+                <label for="imagem">Imagem:</label>
+                <input type="file" id="imagem" name="imagem" required>
+            </p>
+            <button type="submit">Cadastrar Produto</button>
+        </form>
+    </div>
+    <div class="carrinho">
+        <h3>Todos os Produtos:</h3>
+        <div class="items">
+            {% for produto in produtos %}
+              <div class="item">
+                  <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                  <h3>{{ produto.nome }}</h3>
+                  <p>{{ produto.descricao }}</p>
+                  <p>R$ {{ produto.preco }}</p>
+        
+                  <form action="{% url 'alt_prod' produto.id %}" method="get">
+                    {% csrf_token %}
+                    <button type="submit">
+                        Editar
+                    </button>
+                   </form>
+        
+                  <form action="{% url 'rmv_prod' produto.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">
+                        Deletar
+                    </button>
+                   </form>
+              </div>
+            {% endfor %}
+          </div>
+    </div>
+  </main>
+  <footer>
+    <p>Dev by <a href="https://jip8.github.io">Pedro Lucas Martins da Silva</a></p>
+  </footer>
+</body>
+</html>
+
+
+

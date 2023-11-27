@@ -1,0 +1,126 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loja de Hardware</title>
+  <link rel="stylesheet" href="{% static '/loja/css/styles.css' %}">
+  <style>
+    @charset "UTF-8";
+
+    h1 {
+        color: white;
+        font-size: 3vw;
+        padding: 1vw;
+    }
+
+    body {
+        background: url({% static '/loja/images/loginpage/backgrd.jpg' %}) no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+    }
+
+    main {
+        min-height: 85vh;
+    }
+
+    .imgform {
+        background: url({% static '/loja/images/loginpage/form.png' %}) no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+    }
+    
+    h2 {
+        text-align: center;
+        font-size: 3vw;
+        color: white;
+        padding: 0;
+        -webkit-text-stroke: 2px black;
+    }
+    
+    h3 {
+        text-align: left;
+        font-size: 2vw;
+        color: white;
+        padding: 0px;
+    }
+
+    p{
+        color: white;
+        
+    }
+    
+    footer {
+        position: relative;
+        bottom: -6%;
+    }
+    
+    footer > p {
+        font-size: 1vw;
+        padding: 0;
+    }
+    
+</style>
+  <link rel="shortcut icon" href="{% static '/loja/images/loginpage/favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+  
+  <header>
+    <nav class="navbar">
+      <div class="container">
+        <img id="front" src="{% static '/loja/images/loginpage/frontedit.png' %}" alt="imagem decorativa">
+        <h1 class="logo">Administração de Estoque</h1>
+        <ul class="nav-links">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="https://jip8.github.io">Contato</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  
+  <main>
+    <div class="imgform">
+        <h2>Editando o produto {{ produto.nome }}:</h2>
+        <form class="cadprod" action="{% url 'alt_prod' produto_id=produto.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <label for="nome">Nome:</label>
+                <input type="text" name="nome" id="nome" placeholder="Nome" value="{{ produto.nome }}" required>
+            </p>
+            <p>
+                <label for="preco">Preço (R$):</label>
+                <input type="number" step="0.01" name="preco" id="preco" placeholder="Valor" value="{{ produto.preco }}" required>
+            </p>
+            <p>
+                <label for="estoque">Estoque:</label>
+                <input type="number" name="estoque" id="estoque" placeholder="Quantidade" value="{{ produto.estoque }}" required>
+            </p>
+            <p>
+                <label for="imagem">Imagem:</label>
+                <input type="file" id="imagem" name="imagem">
+            </p>
+            <button type="submit">Editar</button>
+        </form>
+    </div>
+  </main>
+  <footer>
+    <p>Dev by <a href="https://jip8.github.io">Pedro Lucas Martins da Silva</a></p>
+  </footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

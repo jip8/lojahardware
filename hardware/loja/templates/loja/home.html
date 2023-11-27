@@ -1,0 +1,131 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loja de Hardware</title>
+  <link rel="stylesheet" href="{% static '/loja/css/styles.css' %}">
+  <style>
+    @charset "UTF-8";
+
+    h1 {
+        color: white;
+        font-size: 3vw;
+        padding: 1vw;
+    }
+
+    body {
+        background: url({% static '/loja/images/loginpage/backgrd.jpg' %}) no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+    }
+
+    
+    .imgform {
+        background: url({% static '/loja/images/loginpage/form.png' %}) no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+    }
+    
+    h2 {
+        text-align: center;
+        font-size: 3vw;
+        color: white;
+        padding: 5vw;
+        -webkit-text-stroke: 2px black;
+    }
+    
+    p{
+        color: white;
+        
+    }
+    
+    footer {
+        position: relative;
+        bottom: -6%;
+    }
+    
+    footer > p {
+        font-size: 1vw;
+        padding: 0;
+    }
+    
+</style>
+  <link rel="shortcut icon" href="{% static '/loja/images/loginpage/favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+  
+  <header>
+    <nav class="navbar">
+      <div class="container">
+        <img id="front" src="{% static '/loja/images/loginpage/frontedit.png' %}" alt="imagem decorativa">
+        <h1 class="logo">Loja de Hardware</h1>
+        <ul class="nav-links">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'home' %}">Produtos</a></li>
+          <li><a href="https://jip8.github.io">Sobre</a></li>
+          <li><a href="https://jip8.github.io">Contato</a></li>
+        </ul>
+        
+        <div class="user">
+          {% if nome_usuario %}
+            <p class="login">Bem vindo, {{ nome_usuario }}!</p>
+            <p><a href="{% url 'logout' %}">Sair</a></p>
+          {% else %}
+            <p class="login">Você não está autenticado. </p>
+            <p><a href="{% url 'login' %}">Faça login!</a></p>
+          {% endif %}
+        </div>
+  
+        <div class="cart1">
+          <form action="{% url 'carrinho' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="cart-icon">
+                <img class="cart-icon" src="{% static '/loja/images/loginpage/cart.png' %}" alt="carrinho">
+            </button>
+        </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
+  <main>
+    <div class="imgform">
+      <h2>
+        Bem-vindo <br>
+        à nossa loja de <br>
+        Hardware e Periféricos!
+      </h2>
+    </div>
+    <div class="container1">
+      
+      <p class="exp">Explore nossa variedade de produtos de alta qualidade:</p>
+  
+      <div class="produtos">
+        {% for produto in produtos %}
+          <div class="produto">
+              <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+              <h3>{{ produto.nome }}</h3>
+              <p>{{ produto.descricao }}</p>
+              <p>R$ {{ produto.preco }}</p>
+              <form action="{% url 'adicionar_carrinho' produto.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-comprar">Adicionar ao Carrinho</button>
+              </form>
+          </div>
+        {% endfor %}
+      </div>
+      
+  
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p>Dev by <a href="https://jip8.github.io">Pedro Lucas Martins da Silva</a></p>
+  </footer>
+</body>
+</html>

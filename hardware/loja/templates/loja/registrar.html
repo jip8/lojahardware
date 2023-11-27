@@ -1,0 +1,140 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/loja/css/loginpage/style.css' %}" media="all">
+    <style>
+        @charset "UTF-8";
+
+        h1 {
+            color: white;
+            font-size: 3vw;
+            padding: 1vw;
+        }
+
+        body {
+            background: url({% static '/loja/images/loginpage/backgrd.jpg' %}) no-repeat;
+            background-size: cover;
+            background-position: right top;
+        }
+
+        .geral {
+            background-image: transparent;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            
+            position: absolute;
+            top: 45%;
+            left: 30%;
+            transform: translate(-50%,-50%);
+        
+            height: 75vh;
+            width: 45vw;
+        
+            border-radius: 17px;
+        
+            overflow: hidden;
+        }
+        
+        .imgform {
+            background: url({% static '/loja/images/loginpage/form.png' %}) no-repeat;
+            background-size: cover;
+        
+            background-position:  -250px 0px;
+        
+            float: left;
+            width: 40%;
+            height: 100%;
+        }
+        
+        .form {
+            float: right;
+            width: 60%;
+            height: 100%;
+        }
+        
+        h2 {
+            text-align: center;
+            font-size: 3vw;
+            color: white;
+            padding: 1vw;
+        }
+        
+        p {
+            color: white;
+            padding: 1vw;
+            font-size: 1.7vw;
+        }
+        
+        footer {
+            position: absolute;
+            bottom: -6%;
+        }
+        
+        footer > p {
+            font-size: 1vw;
+            padding: 0;
+        }
+        
+        img#front {
+            position: absolute;
+            top: 45%;
+            left: 75%;
+            transform: translate(-50%,-50%);
+            
+            width: 400px;
+            height: 500px;
+        }
+        
+        .alert > p {
+            color: red;
+            text-align: center;
+        }
+    </style>
+    <link rel="shortcut icon" href="{% static '/loja/images/loginpage/favicon.ico' %}" type="image/x-icon">
+    <title>Registre-se!</title>
+</head>
+<body>
+    <header>
+        <h1>Bem Vindo!</h1>
+    </header>
+    <main>
+        <section class="geral">
+            <div class="imgform"></div>
+            <div class="form">
+                <h2>Registre-se!</h2>
+                <form action="{% url 'registrar' %}" method="POST">
+                    {% csrf_token %}
+                    <p class="tex">
+                        <label for="nome">Nome:</label>
+                        <input type="text" name="nome" id="nome" placeholder="Nome" required>
+                    </p>
+                    <p>
+                        <label for="email_reg">Email:</label>
+                        <input type="email" name="email" id="email_reg" placeholder="Email" required>
+                    </p>
+                    {% if mensagem %}
+                        <div class="alert" role="alert">
+                            <p>{{ mensagem }}</p>
+                        </div>
+                    {% endif %}
+                    <p class="pas">
+                        <label for="senha_reg">Senha:</label>
+                        <input type="password" name="senha" id="senha_reg" placeholder="Senha" required>
+                    </p>
+                    <p><input type="submit" value="Cadastrar"></p>
+                    <p><a href="{% url 'login' %}">Já possui conta? Faça o Login</a></p>
+                </form>
+            </div>
+        </section>
+        <img id="front" src="{% static '/loja/images/loginpage/frontedit.png' %}" alt="imagem decorativa">
+        <footer>
+            <p>Dev by Pedro Lucas Martins da Silva</p>
+        </footer>
+    </main>
+</body>
+</html>
